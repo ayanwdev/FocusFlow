@@ -11,9 +11,9 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.platform.LocalContext
 
 private val DarkColorScheme = darkColorScheme(
-    background = TailwindColors.Gray_950,
-    surface = TailwindColors.Gray_100,
-    primary = TailwindColors.Indigo_500,
+    background = TwColors.Gray_950,
+    surface = TwColors.Gray_100,
+    primary = TwColors.Indigo_500,
 )
 
 private val LightColorScheme = lightColorScheme(
@@ -33,7 +33,7 @@ private val LightColorScheme = lightColorScheme(
 fun FocusFlowTheme(
     darkTheme: Boolean = isSystemInDarkTheme(),
     // Dynamic color is available on Android 12+
-    dynamicColor: Boolean = true,
+    dynamicColor: Boolean = false,
     content: @Composable () -> Unit
 ) {
     val colorScheme = when {

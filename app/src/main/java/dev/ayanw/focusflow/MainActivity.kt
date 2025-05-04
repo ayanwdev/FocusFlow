@@ -30,6 +30,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import dev.ayanw.focusflow.ui.components.timeControlButton
 import dev.ayanw.focusflow.ui.theme.FocusFlowTheme
+import dev.ayanw.focusflow.ui.theme.Roboto_Mono
 import dev.ayanw.focusflow.utils.formatTime
 import kotlinx.coroutines.delay
 
@@ -56,8 +57,8 @@ class MainActivity : ComponentActivity() {
                         ) {
                             MainTimer(
                                 modifier = Modifier.padding(innerPadding),
-                                time = 5,
-                                mode = TimerMode.STOPWATCH,
+//                                time = 5,
+                                mode = TimerMode.COUNTDOWN,
                             )
                         }
                     }
@@ -97,6 +98,7 @@ fun MainTimer(
         Text(
             text = formatTime(timeLeft),
             style = TextStyle(fontSize = 52.sp),
+            fontFamily = Roboto_Mono,
             modifier = modifier.clickable {},
         )
         Row(horizontalArrangement = Arrangement.spacedBy(16.dp)) {

@@ -2,7 +2,7 @@ package dev.ayanw.focusflow.ui.theme
 
 import androidx.compose.ui.graphics.Color
 
-object TailwindColors {
+object TwColors {
     val black = Color(0xFF000000)
     val white = Color(0xFFFFFFFF)
     val Slate_50 = Color(0xFFF8FAFC)
