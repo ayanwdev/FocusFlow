@@ -14,11 +14,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import dev.ayanw.focusflow.ui.components.MainTimer
 import dev.ayanw.focusflow.ui.theme.FocusFlowTheme
-
-enum class TimerMode {
-    STOPWATCH,
-    COUNTDOWN,
-}
+import dev.ayanw.focusflow.utils.timerControl.TimerMode
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
