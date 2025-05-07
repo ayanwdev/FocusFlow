@@ -5,11 +5,18 @@ import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonColors
+import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -21,20 +28,61 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import dev.ayanw.focusflow.R
 import dev.ayanw.focusflow.ui.theme.Roboto_Mono
-import dev.ayanw.focusflow.ui.theme.TwColors
+import dev.ayanw.focusflow.ui.theme.TailWind
 import dev.ayanw.focusflow.utils.timerControl.TimerControl
 import dev.ayanw.focusflow.utils.timerControl.TimerMode
 import dev.ayanw.focusflow.utils.timerControl.TimerState
 
+@Preview
+@Composable
+fun TimeControlButton(
+    modifier: Modifier = Modifier,
+    enabled: Boolean = true,
+    size: Dp = 50.dp,
+    iconSize: Dp = 40.dp,
+    icon: Int = R.drawable.ic_play,
+    bgColor: Color = TailWind.Indigo_500,
+    iconColor: Color = TailWind.Gray_100,
+    onClick: () -> Unit = {},
+) {
+    Button(
+        modifier =
+            modifier
+                .height(size)
+                .width(size),
+        enabled = enabled,
+        onClick = onClick,
+        shape = RoundedCornerShape(50),
+        contentPadding = PaddingValues(0.dp),
+        colors = ButtonColors(
+            contentColor = iconColor,
+            containerColor = bgColor,
+            disabledContainerColor = Color.Transparent,
+            disabledContentColor = Color.Transparent,
+        ),
+    ) {
+        Icon(
+            modifier =
+                Modifier
+                    .height(iconSize)
+                    .width(iconSize),
+            painter = painterResource(id = icon),
+            contentDescription = "TimeControlButton",
+        )
+    }
+}
+
 @Preview(showBackground = true)
 @Composable
-fun MainTimer(
+fun Timer(
     modifier: Modifier = Modifier,
     mode: TimerMode = TimerMode.COUNTDOWN,
     time: Int = 25 * 60 * 1000,
@@ -61,8 +109,8 @@ fun MainTimer(
                     width = 20.dp,
                     brush = Brush.linearGradient(
                         colors = listOf(
-                            TwColors.Indigo_500,
-                            TwColors.Violet_500
+                            TailWind.Indigo_500,
+                            TailWind.Violet_500
                         )
                     ),
                     shape = CircleShape
@@ -75,7 +123,7 @@ fun MainTimer(
                     .background(Color.Transparent)
                     .border(
                         width = 5.dp,
-                        color = TwColors.Emerald_500,
+                        color = TailWind.Emerald_500,
                         shape = CircleShape
                     ),
                 horizontalAlignment = Alignment.CenterHorizontally,
@@ -97,7 +145,7 @@ fun MainTimer(
                 horizontalArrangement = Arrangement.spacedBy(16.dp),
                 verticalAlignment = Alignment.CenterVertically,
             ) {
-                timeControlButton(
+                TimeControlButton(
                     size = 70.dp,
                     iconSize = 60.dp,
                     icon = when (state) {
@@ -128,14 +176,14 @@ fun MainTimer(
                     },
                 )
             }
-            timeControlButton(
+            TimeControlButton(
                 enabled = state == TimerState.PAUSED,
                 onClick = {
                     timerControl.reset()
                     remaining = if (mode == TimerMode.COUNTDOWN) time else 0
                     state = TimerState.STOPPED
                 },
-                bgColor = TwColors.Pink_500,
+                bgColor = TailWind.Pink_500,
                 icon = R.drawable.ic_stop,
                 modifier = modifier.offset(
                     x = 100.dp,

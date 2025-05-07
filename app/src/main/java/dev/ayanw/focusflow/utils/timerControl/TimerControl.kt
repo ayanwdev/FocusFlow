@@ -7,6 +7,10 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.isActive
 import kotlinx.coroutines.launch
 
+const val SECONDS_MS = 1000
+const val MINUTES_MS = 60 * SECONDS_MS
+const val HOURS_MS = 60 * MINUTES_MS
+
 enum class TimerMode {
     STOPWATCH,
     COUNTDOWN,
@@ -84,10 +88,10 @@ class TimerControl(
     }
 
     fun formatTime(ms: Int): FormattedTime {
-        val hours = (ms / 3600000).toString().padStart(2, '0')
-        val minutes = ((ms % 3600000) / 60000).toString().padStart(2, '0')
-        val seconds = ((ms % 60000) / 1000).toString().padStart(2, '0')
-        val milliseconds = (ms % 1000).toString().padStart(3, '0')
+        val hours = (ms / HOURS_MS).toString().padStart(2, '0')
+        val minutes = ((ms % HOURS_MS) / MINUTES_MS).toString().padStart(2, '0')
+        val seconds = ((ms % MINUTES_MS) / SECONDS_MS).toString().padStart(2, '0')
+        val milliseconds = (ms % SECONDS_MS).toString().padStart(3, '0')
 
         return FormattedTime(
             hours = hours,
