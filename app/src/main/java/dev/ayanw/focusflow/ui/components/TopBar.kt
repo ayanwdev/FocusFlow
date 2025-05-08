@@ -5,14 +5,14 @@ import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.statusBars
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.rounded.Menu
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalDensity
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
-import dev.ayanw.focusflow.R
 
 @Composable
 fun TopBar(
@@ -27,7 +27,7 @@ fun TopBar(
         IconButton(onClick = { navButtonAction() }) {
             Icon(
                 modifier = Modifier.size(34.dp),
-                painter = painterResource(id = R.drawable.ic_menu),
+                imageVector = Icons.Rounded.Menu,
                 contentDescription = "Menu",
             )
         }

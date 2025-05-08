@@ -31,6 +31,22 @@ val Roboto_Mono_Bold = FontFamily(
     )
 )
 
+val Quicksand = FontFamily(
+    Font(
+        googleFont = GoogleFont("Quicksand"),
+        fontProvider = provider,
+        weight = FontWeight.Normal
+    )
+)
+
+val Quicksand_Bold = FontFamily(
+    Font(
+        googleFont = GoogleFont("Quicksand"),
+        fontProvider = provider,
+        weight = FontWeight.SemiBold
+    )
+)
+
 // Set of Material typography styles to start with
 val Typography = Typography(
     bodyLarge = TextStyle(
