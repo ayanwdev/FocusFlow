@@ -4,8 +4,6 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.DrawerValue
@@ -13,14 +11,19 @@ import androidx.compose.material3.ModalNavigationDrawer
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.rememberDrawerState
 import androidx.compose.runtime.rememberCoroutineScope
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.unit.dp
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
+import androidx.navigation.compose.rememberNavController
+import dev.ayanw.focusflow.pages.About
+import dev.ayanw.focusflow.pages.Home
+import dev.ayanw.focusflow.pages.Premium
+import dev.ayanw.focusflow.pages.Settings
+import dev.ayanw.focusflow.pages.Statistics
+import dev.ayanw.focusflow.pages.Tags
 import dev.ayanw.focusflow.ui.components.SideBar
-import dev.ayanw.focusflow.ui.components.Timer
 import dev.ayanw.focusflow.ui.components.TopBar
 import dev.ayanw.focusflow.ui.theme.FocusFlowTheme
-import dev.ayanw.focusflow.utils.timerControl.TimerMode
 import kotlinx.coroutines.launch
 
 class MainActivity : ComponentActivity() {
@@ -32,13 +35,18 @@ class MainActivity : ComponentActivity() {
         setContent {
             FocusFlowTheme {
 
-                val drawerState = rememberDrawerState(initialValue = DrawerValue.Open)
+                val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
                 val scope = rememberCoroutineScope()
+                val navController = rememberNavController()
 
                 ModalNavigationDrawer(
                     drawerState = drawerState,
                     drawerContent = {
-                        SideBar()
+                        SideBar(
+                            navController = navController,
+                            drawerState = drawerState,
+                            drawerScope = scope,
+                        )
                     }
                 ) {
                     Scaffold(
@@ -55,23 +63,17 @@ class MainActivity : ComponentActivity() {
                             })
                         }
                     ) { innerPadding ->
-                        Box(
-                            contentAlignment = Alignment.Center,
-                            modifier =
-                                Modifier
-                                    .fillMaxSize()
-                                    .padding(innerPadding),
+                        NavHost(
+                            navController = navController,
+                            startDestination = "home",
+                            modifier = Modifier.padding(innerPadding)
                         ) {
-                            Column(
-                                modifier = Modifier
-                                    .padding(top = 80.dp),
-                                horizontalAlignment = Alignment.CenterHorizontally,
-                            ) {
-                                Timer(
-                                    modifier = Modifier.padding(innerPadding),
-                                    mode = TimerMode.COUNTDOWN,
-                                )
-                            }
+                            composable("home") { Home() }
+                            composable("tags") { Tags() }
+                            composable("statistics") { Statistics() }
+                            composable("settings") { Settings() }
+                            composable("about") { About() }
+                            composable("premium") { Premium() }
                         }
                     }
 

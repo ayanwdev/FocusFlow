@@ -15,6 +15,7 @@ import androidx.compose.material.icons.rounded.Analytics
 import androidx.compose.material.icons.rounded.Info
 import androidx.compose.material.icons.rounded.Settings
 import androidx.compose.material.icons.rounded.Stars
+import androidx.compose.material3.DrawerState
 import androidx.compose.material3.Icon
 import androidx.compose.material3.NavigationDrawerItem
 import androidx.compose.material3.NavigationDrawerItemDefaults
@@ -30,8 +31,11 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.LocalWindowInfo
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
 import dev.ayanw.focusflow.ui.theme.Quicksand_Bold
 import dev.ayanw.focusflow.ui.theme.TailWind
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.launch
 
 data class SideBarItem(
     val label: String,
@@ -69,7 +73,7 @@ val items = listOf<SideBarItem>(
 )
 
 @Composable
-fun SideBar() {
+fun SideBar(navController: NavController, drawerState: DrawerState, drawerScope: CoroutineScope) {
 
     var selected by remember { mutableStateOf(items.first()) }
 
@@ -94,7 +98,13 @@ fun SideBar() {
                     )
                 },
                 selected = (selected == item),
-                onClick = { selected = item },
+                onClick = {
+                    selected = item
+                    navController.navigate(item.label)
+                    drawerScope.launch {
+                        drawerState.close()
+                    }
+                },
                 colors = NavigationDrawerItemDefaults.colors(
                     selectedContainerColor = TailWind.Slate_800,
                 ),
