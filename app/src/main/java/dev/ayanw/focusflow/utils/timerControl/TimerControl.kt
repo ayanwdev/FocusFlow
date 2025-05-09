@@ -38,27 +38,25 @@ class TimerControl(
 ) {
     private var timerJob: Job? = null
     private var startTimestamp = 0L
-    private var pausedAt = 0
+    private var elapsedBeforePause = 0
 
     var state: TimerState = TimerState.STOPPED
         private set
 
     fun start(scope: CoroutineScope) {
         if (state == TimerState.RUNNING) return
-        state = TimerState.RUNNING
 
+        state = TimerState.RUNNING
         startTimestamp = SystemClock.elapsedRealtime()
-        val baseTime =
-            if (pausedAt > 0) pausedAt else if (mode == TimerMode.STOPWATCH) 0 else initialTime
 
         timerJob = scope.launch {
             while (isActive) {
                 val now = SystemClock.elapsedRealtime()
-                val elapsed = (now - startTimestamp).toInt()
+                val elapsed = (now - startTimestamp).toInt() + elapsedBeforePause
 
                 val newTime = when (mode) {
-                    TimerMode.STOPWATCH -> baseTime + elapsed
-                    TimerMode.COUNTDOWN -> baseTime - elapsed
+                    TimerMode.STOPWATCH -> elapsed
+                    TimerMode.COUNTDOWN -> initialTime - elapsed
                 }
 
                 onTick(newTime)
@@ -77,14 +75,14 @@ class TimerControl(
     fun pause() {
         if (state != TimerState.RUNNING) return
         state = TimerState.PAUSED
-        pausedAt = SystemClock.elapsedRealtime().toInt() - startTimestamp.toInt() + pausedAt
+        elapsedBeforePause += (SystemClock.elapsedRealtime() - startTimestamp).toInt()
         timerJob?.cancel()
     }
 
     fun reset() {
         timerJob?.cancel()
         state = TimerState.STOPPED
-        pausedAt = 0
+        elapsedBeforePause = 0
     }
 
     fun formatTime(ms: Int): FormattedTime {
@@ -93,11 +91,6 @@ class TimerControl(
         val seconds = ((ms % MINUTES_MS) / SECONDS_MS).toString().padStart(2, '0')
         val milliseconds = (ms % SECONDS_MS).toString().padStart(3, '0')
 
-        return FormattedTime(
-            hours = hours,
-            minutes = minutes,
-            seconds = seconds,
-            milliseconds = milliseconds
-        )
+        return FormattedTime(hours, minutes, seconds, milliseconds)
     }
 }

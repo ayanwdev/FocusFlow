@@ -9,6 +9,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.rounded.Article
 import androidx.compose.material.icons.automirrored.rounded.Label
 import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.Person
@@ -17,6 +18,7 @@ import androidx.compose.material.icons.rounded.Info
 import androidx.compose.material.icons.rounded.Settings
 import androidx.compose.material.icons.rounded.Stars
 import androidx.compose.material3.DrawerState
+import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.NavigationDrawerItem
 import androidx.compose.material3.NavigationDrawerItemDefaults
@@ -45,35 +47,49 @@ data class SideBarItem(
     val action: () -> Unit = {},
 )
 
-val items = listOf<SideBarItem>(
-    SideBarItem(
-        label = "Home",
-        icon = Icons.Filled.Home,
+val items: List<List<SideBarItem>> = listOf(
+    listOf(
+        SideBarItem(
+            label = "Home",
+            icon = Icons.Filled.Home,
+        ),
+        SideBarItem(
+            label = "Profile",
+            icon = Icons.Filled.Person,
+        ),
+        SideBarItem(
+            label = "Statistics",
+            icon = Icons.Rounded.Analytics
+        )
     ),
-    SideBarItem(
-        label = "Profile",
-        icon = Icons.Filled.Person,
+    listOf(
+        SideBarItem(
+            label = "Presets",
+            icon = Icons.AutoMirrored.Rounded.Article
+        ),
+        SideBarItem(
+            label = "Tags",
+            icon = Icons.AutoMirrored.Rounded.Label
+        ),
+        SideBarItem(
+            label = "Subjects",
+            icon = Icons.Rounded.Info
+        )
     ),
-    SideBarItem(
-        label = "Tags",
-        icon = Icons.AutoMirrored.Rounded.Label
-    ),
-    SideBarItem(
-        label = "Statistics",
-        icon = Icons.Rounded.Analytics
-    ),
-    SideBarItem(
-        label = "Settings",
-        icon = Icons.Rounded.Settings
-    ),
-    SideBarItem(
-        label = "About",
-        icon = Icons.Rounded.Info
-    ),
-    SideBarItem(
-        label = "Premium",
-        icon = Icons.Rounded.Stars,
-        color = TailWind.Yellow_500
+    listOf(
+        SideBarItem(
+            label = "Settings",
+            icon = Icons.Rounded.Settings
+        ),
+        SideBarItem(
+            label = "About",
+            icon = Icons.Rounded.Info
+        ),
+        SideBarItem(
+            label = "Premium",
+            icon = Icons.Rounded.Stars,
+            color = TailWind.Yellow_500
+        )
     )
 )
 
@@ -96,37 +112,48 @@ fun SideBar(
             )
     ) {
         Spacer(Modifier.height(48.dp))
-        items.forEach { item ->
-            NavigationDrawerItem(
-                label = {
-                    Text(
-                        text = item.label,
-                        color = TailWind.Gray_300,
-                        fontSize = 20.sp,
-                        fontFamily = Quicksand_Bold
-                    )
-                },
-                selected = (selected == item.label),
-                onClick = {
-                    selected = item.label
-                    navController.navigate(item.label)
-                    drawerScope.launch {
-                        drawerState.close()
+        items.forEach { list ->
+            if (items.indexOf(list) != 0) {
+                HorizontalDivider(
+                    modifier = Modifier
+                        .padding(vertical = 8.dp)
+                        .height(1.dp),
+                    color = TailWind.Gray_700
+                )
+            }
+            list.forEach { item ->
+                NavigationDrawerItem(
+                    label = {
+                        Text(
+                            text = item.label,
+                            color = TailWind.Gray_300,
+                            fontSize = 20.sp,
+                            fontFamily = Quicksand_Bold
+                        )
+                    },
+                    selected = (selected == item.label),
+                    onClick = {
+                        selected = item.label
+                        navController.navigate(item.label)
+                        drawerScope.launch {
+                            drawerState.close()
+                        }
+                    },
+                    colors = NavigationDrawerItemDefaults.colors(
+                        selectedContainerColor = TailWind.Slate_800,
+                    ),
+                    icon = {
+                        Icon(
+                            modifier = Modifier
+                                .size(24.dp),
+                            imageVector = item.icon,
+                            contentDescription = item.label,
+                            tint = item.color,
+                        )
                     }
-                },
-                colors = NavigationDrawerItemDefaults.colors(
-                    selectedContainerColor = TailWind.Slate_800,
-                ),
-                icon = {
-                    Icon(
-                        modifier = Modifier
-                            .size(24.dp),
-                        imageVector = item.icon,
-                        contentDescription = item.label,
-                        tint = item.color,
-                    )
-                }
-            )
+                )
+
+            }
         }
     }
 }
