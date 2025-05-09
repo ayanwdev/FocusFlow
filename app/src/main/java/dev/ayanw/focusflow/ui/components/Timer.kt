@@ -53,9 +53,8 @@ fun TimeControlButton(
     modifier: Modifier = Modifier,
     enabled: Boolean = true,
     size: Dp = 50.dp,
-    iconSize: Dp = 40.dp,
-//    icon: Int = R.drawable.ic_play,
     icon: ImageVector = Icons.Rounded.PlayArrow,
+    iconSize: Dp = 40.dp,
     bgColor: Color = TailWind.Indigo_500,
     iconColor: Color = TailWind.Gray_100,
     onClick: () -> Unit = {},
@@ -130,7 +129,6 @@ fun Timer(
             Column(
                 modifier = Modifier
                     .size(260.dp)
-//                    .background(TailWind.Slate_900)
                     .border(
                         width = 5.dp,
                         color = TailWind.Emerald_500,

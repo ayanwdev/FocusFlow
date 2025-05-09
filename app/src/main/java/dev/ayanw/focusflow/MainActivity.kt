@@ -18,13 +18,13 @@ import androidx.navigation.compose.rememberNavController
 import dev.ayanw.focusflow.pages.About
 import dev.ayanw.focusflow.pages.Home
 import dev.ayanw.focusflow.pages.Premium
+import dev.ayanw.focusflow.pages.Profile
 import dev.ayanw.focusflow.pages.Settings
 import dev.ayanw.focusflow.pages.Statistics
 import dev.ayanw.focusflow.pages.Tags
 import dev.ayanw.focusflow.ui.components.SideBar
 import dev.ayanw.focusflow.ui.components.TopBar
 import dev.ayanw.focusflow.ui.theme.FocusFlowTheme
-import kotlinx.coroutines.launch
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -52,15 +52,11 @@ class MainActivity : ComponentActivity() {
                     Scaffold(
                         modifier = Modifier.fillMaxSize(),
                         topBar = {
-                            TopBar(navButtonAction = {
-                                scope.launch {
-                                    if (drawerState.isOpen) {
-                                        drawerState.close()
-                                    } else {
-                                        drawerState.open()
-                                    }
-                                }
-                            })
+                            TopBar(
+                                navController = navController,
+                                drawerState = drawerState,
+                                drawerScope = scope
+                            )
                         }
                     ) { innerPadding ->
                         NavHost(
@@ -74,6 +70,7 @@ class MainActivity : ComponentActivity() {
                             composable("settings") { Settings() }
                             composable("about") { About() }
                             composable("premium") { Premium() }
+                            composable("profile") { Profile() }
                         }
                     }
 

@@ -11,6 +11,7 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.rounded.Label
 import androidx.compose.material.icons.filled.Home
+import androidx.compose.material.icons.filled.Person
 import androidx.compose.material.icons.rounded.Analytics
 import androidx.compose.material.icons.rounded.Info
 import androidx.compose.material.icons.rounded.Settings
@@ -50,6 +51,10 @@ val items = listOf<SideBarItem>(
         icon = Icons.Filled.Home,
     ),
     SideBarItem(
+        label = "Profile",
+        icon = Icons.Filled.Person,
+    ),
+    SideBarItem(
         label = "Tags",
         icon = Icons.AutoMirrored.Rounded.Label
     ),
@@ -73,9 +78,13 @@ val items = listOf<SideBarItem>(
 )
 
 @Composable
-fun SideBar(navController: NavController, drawerState: DrawerState, drawerScope: CoroutineScope) {
+fun SideBar(
+    navController: NavController,
+    drawerState: DrawerState,
+    drawerScope: CoroutineScope
+) {
 
-    var selected by remember { mutableStateOf(items.first()) }
+    var selected by remember { mutableStateOf(navController.currentDestination?.route) }
 
     Column(
         modifier = Modifier
@@ -97,9 +106,9 @@ fun SideBar(navController: NavController, drawerState: DrawerState, drawerScope:
                         fontFamily = Quicksand_Bold
                     )
                 },
-                selected = (selected == item),
+                selected = (selected == item.label),
                 onClick = {
-                    selected = item
+                    selected = item.label
                     navController.navigate(item.label)
                     drawerScope.launch {
                         drawerState.close()

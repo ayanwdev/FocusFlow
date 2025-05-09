@@ -3,8 +3,9 @@ package dev.ayanw.focusflow.ui.theme
 import androidx.compose.ui.graphics.Color
 
 object TailWind {
-    val black = Color(0xFF000000)
-    val white = Color(0xFFFFFFFF)
+    val Black = Color(0xFF000000)
+    val White = Color(0xFFFFFFFF)
+    val Transparent = Color(0x00000000)
 
     val Slate_50 = Color(0xFFF8FAFC)
     val Slate_100 = Color(0xFFF1F5F9)
