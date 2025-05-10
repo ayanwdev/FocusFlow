@@ -32,7 +32,7 @@ data class FormattedTime(
 
 class TimerControl(
     private val mode: TimerMode,
-    private val initialTime: Int, // in ms
+    private val initialTime: Int,
     private val onTick: (Int) -> Unit,
     private val onFinish: () -> Unit
 ) {
