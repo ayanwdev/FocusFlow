@@ -1,4 +1,4 @@
-package dev.ayanw.focusflow.utils.timerControl
+package dev.ayanw.focusflow.utils
 
 import android.os.SystemClock
 import kotlinx.coroutines.CoroutineScope

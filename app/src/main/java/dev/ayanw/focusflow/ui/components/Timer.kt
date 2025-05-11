@@ -33,13 +33,13 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import dev.ayanw.focusflow.ui.components.Buttons.PresetSelectionButton
-import dev.ayanw.focusflow.ui.components.Buttons.TimeControlButton
+import dev.ayanw.focusflow.ui.components.buttons.PresetSelectionButton
+import dev.ayanw.focusflow.ui.components.buttons.TimeControlButton
 import dev.ayanw.focusflow.ui.theme.Roboto_Mono
 import dev.ayanw.focusflow.ui.theme.TailWind
-import dev.ayanw.focusflow.utils.timerControl.TimerControl
-import dev.ayanw.focusflow.utils.timerControl.TimerMode
-import dev.ayanw.focusflow.utils.timerControl.TimerState
+import dev.ayanw.focusflow.utils.TimerControl
+import dev.ayanw.focusflow.utils.TimerMode
+import dev.ayanw.focusflow.utils.TimerState
 
 
 @Preview(showBackground = true)

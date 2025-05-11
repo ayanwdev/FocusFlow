@@ -10,8 +10,8 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import dev.ayanw.focusflow.ui.components.Timer
-import dev.ayanw.focusflow.utils.timerControl.SECONDS_MS
-import dev.ayanw.focusflow.utils.timerControl.TimerMode
+import dev.ayanw.focusflow.utils.SECONDS_MS
+import dev.ayanw.focusflow.utils.TimerMode
 
 
 @Composable

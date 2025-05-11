@@ -1,4 +1,4 @@
-package dev.ayanw.focusflow.ui.components.Buttons
+package dev.ayanw.focusflow.ui.components.buttons
 
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.height
