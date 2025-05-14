@@ -31,8 +31,8 @@ import dev.ayanw.focusflow.utils.presetManager.PresetDb
 import dev.ayanw.focusflow.utils.presetManager.initDefaultPresets
 
 class MainActivity : ComponentActivity() {
-    override fun onCreate(savedInstanceState: Bundle?) {
 
+    override fun onCreate(savedInstanceState: Bundle?) {
 
         super.onCreate(savedInstanceState)
 

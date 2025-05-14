@@ -21,9 +21,9 @@ fun Presets() {
     val presets = presetsFlow.collectAsState(initial = emptyList())
 
     Column {
-        Text(text = "Presets: ${size}\n")
+        Text(text = "Presets: ${size.value}\n")
         presets.value.forEach { preset ->
-            Text(text = "#${preset.id}: ${preset.name} : ${preset.color}")
+            Text(text = "#${preset.id}: ${preset.name} : ${preset.color.value}")
         }
     }
 }
