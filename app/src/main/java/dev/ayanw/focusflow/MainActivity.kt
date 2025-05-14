@@ -27,11 +27,18 @@ import dev.ayanw.focusflow.pages.Tags
 import dev.ayanw.focusflow.ui.components.SideBar
 import dev.ayanw.focusflow.ui.components.TopBar
 import dev.ayanw.focusflow.ui.theme.FocusFlowTheme
+import dev.ayanw.focusflow.utils.presetManager.PresetDb
+import dev.ayanw.focusflow.utils.presetManager.initDefaultPresets
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
 
+
         super.onCreate(savedInstanceState)
+
+        val presetDb = PresetDb.getDb(applicationContext)
+        initDefaultPresets(presetDb)
+
         enableEdgeToEdge()
 
         setContent {
@@ -63,7 +70,7 @@ class MainActivity : ComponentActivity() {
                     ) { innerPadding ->
                         NavHost(
                             navController = navController,
-                            startDestination = "home",
+                            startDestination = "presets",
                             modifier = Modifier.padding(innerPadding)
                         ) {
                             composable("home") { Home() }

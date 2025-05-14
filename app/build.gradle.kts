@@ -42,6 +42,7 @@ android {
 
 dependencies {
     
+    implementation(libs.gson)
     val room_version = "2.7.1"
     val material_icons_version = "1.7.8"
     val google_fonts_version = "1.9.0-alpha02"
