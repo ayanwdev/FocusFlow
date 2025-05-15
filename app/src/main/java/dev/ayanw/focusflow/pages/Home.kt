@@ -17,7 +17,6 @@ import dev.ayanw.focusflow.utils.TimerMode
 @Composable
 fun Home() {
     Box(
-//        contentAlignment = Alignment.Center,
         modifier =
             Modifier
                 .fillMaxSize()
