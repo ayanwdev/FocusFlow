@@ -16,6 +16,7 @@ import androidx.compose.material.icons.rounded.Analytics
 import androidx.compose.material.icons.rounded.Info
 import androidx.compose.material.icons.rounded.Settings
 import androidx.compose.material.icons.rounded.Star
+import androidx.compose.material3.DrawerState
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.ModalDrawerSheet
@@ -27,6 +28,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import dev.ayanw.focusflow.models.NavigationBarIcon
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.launch
 
 data class SelectedItem(
     val rowIndex: Int,
@@ -34,7 +37,10 @@ data class SelectedItem(
 )
 
 @Composable
-fun NavigationBar() {
+fun SideNavigationBar(
+    drawerState: DrawerState,
+    drawerScope: CoroutineScope
+) {
     val navItems: List<List<NavigationBarIcon>> = listOf(
         listOf(
             NavigationBarIcon(
@@ -82,10 +88,7 @@ fun NavigationBar() {
 
     var (selection, setSelection) = remember {
         androidx.compose.runtime.mutableStateOf(
-            SelectedItem(
-                0,
-                0
-            )
+            SelectedItem(0, 0)
         )
     }
     fun getSelection() = selection
@@ -114,6 +117,8 @@ fun NavigationBar() {
                         ) == getSelection().itemIndex,
                         onClick = {
                             setSelection(SelectedItem(navItems.indexOf(row), row.indexOf(item)))
+
+                            drawerScope.launch { drawerState.close() }
                         },
                     )
                 }
