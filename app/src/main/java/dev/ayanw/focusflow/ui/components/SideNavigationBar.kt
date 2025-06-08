@@ -86,7 +86,7 @@ fun SideNavigationBar(
         )
     )
 
-    var (selection, setSelection) = remember {
+    val (selection, setSelection) = remember {
         androidx.compose.runtime.mutableStateOf(
             SelectedItem(0, 0)
         )

@@ -8,8 +8,16 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.rounded.Clear
+import androidx.compose.material.icons.rounded.Close
 import androidx.compose.material3.Button
+import androidx.compose.material3.ColorScheme
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
+import androidx.compose.material3.IconButtonColors
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.ModalBottomSheet
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -21,22 +29,27 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import dev.ayanw.focusflow.utils.TimerManager
+import dev.ayanw.focusflow.utils.timerManager.Timer
+import dev.ayanw.focusflow.utils.timerManager.TimerState
 import java.util.Locale
 import java.util.concurrent.TimeUnit
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun Timer() {
-    // Hold TimerManager and time state
-    val timer = remember { TimerManager() }
-    var time by remember { mutableStateOf(timer.getTimeComponents()) }
-    var bottomSheetState by rememberSaveable { mutableStateOf(true) }
+    val timer = remember { Timer() }
 
-    // Picker state, initialized from current timer value
+    timer.setTime(TimeUnit.MINUTES.toMillis(25))
+
+    var time by remember { mutableStateOf(timer.getTimeComponents()) }
+    var bottomSheetState by rememberSaveable { mutableStateOf(false) }
+
+
+    // For time picker
     var hours by rememberSaveable { mutableIntStateOf(time.hours) }
     var minutes by rememberSaveable { mutableIntStateOf(time.minutes) }
     var seconds by rememberSaveable { mutableIntStateOf(time.seconds) }
@@ -56,6 +69,8 @@ fun Timer() {
             }
         ) {
 
+            // Time HH:MM:SS
+            // <--
             listOf(
                 time.hours,
                 time.minutes,
@@ -77,7 +92,33 @@ fun Timer() {
                     )
                 }
             }
+            // -->
 
+        }
+
+        Spacer(modifier = Modifier.height(16.dp))
+
+        Row() {
+            Button(onClick = { /* TODO */ }) {
+                Text(
+                    text = "Start",
+                    fontSize = 18.sp
+                )
+            }
+            IconButton(
+                onClick = { /* TODO */ },
+                colors = IconButtonColors(
+                    containerColor = MaterialTheme.colorScheme.primary,
+                    contentColor = MaterialTheme.colorScheme.onPrimary,
+                    disabledContentColor = Color.Transparent,
+                    disabledContainerColor = Color.Transparent
+                )
+            ) {
+                Icon(
+                    imageVector = Icons.Rounded.Clear,
+                    contentDescription = "Clear Timer"
+                )
+            }
         }
     }
 
@@ -126,7 +167,6 @@ fun Timer() {
                     modifier = Modifier.fillMaxWidth(),
                     horizontalAlignment = Alignment.CenterHorizontally
                 ) {
-//                    Text("${timer.getTimeComponents()}")
                     Button(
                         onClick = {
                             val totalMillis = TimeUnit.HOURS.toMillis(hours.toLong()) +

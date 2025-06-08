@@ -22,7 +22,6 @@ import dev.ayanw.focusflow.ui.components.TopBar
 import dev.ayanw.focusflow.ui.theme.FocusFlowTheme
 
 class MainActivity : ComponentActivity() {
-    @OptIn(ExperimentalMaterial3Api::class)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
